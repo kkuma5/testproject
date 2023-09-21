@@ -5,11 +5,11 @@ from pyspark.sql import SparkSession
 
 @udf(returnType=BooleanType())
 def xml_validation(file_name):
-    schema_file = "/Users/kyarl1/xsdfiles/sample_order.xsd"
+    schema_file = "/Users/kyarl1/spark_kafka/data/schema/sample_order.xsd"
     my_schema = xmlschema.XMLSchema(schema_file)
     return my_schema.is_valid(file_name)
 
-source_file_location = '/Users/kyarl1/xmlfiles/'
+source_file_location = '/Users/kyarl1/spark_kafka/data/files/'
 
 spark = SparkSession.builder.appName("spark_src_to_kafka").getOrCreate()
 df = spark.read.format("xml").option("rowTag","Root").load(source_file_location)
